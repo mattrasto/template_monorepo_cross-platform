@@ -3,7 +3,17 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 
 const { VueLoaderPlugin } = require('vue-loader');
-const constants = require('./constants.js');
+const rootConstants = require('../common/constants.js');
+const projectConstants = require('./constants.js');
+
+const constants = {
+  ...rootConstants,
+  ...projectConstants,
+  ALIASES: {
+    ...rootConstants.ALIASES,
+    ...projectConstants.ALIASES,
+  },
+}
 
 module.exports = {
   target: 'web',

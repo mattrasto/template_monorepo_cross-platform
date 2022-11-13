@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development npm-run-all --parallel dev:build dev:start",
-    "dev:build": "webpack --mode development --config client/webpack.config.js",
-    "dev:server": "cross-env NODE_ENV=development npm-run-all --parallel dev:build dev:start:server",
-    "dev:start": "webpack serve",
-    "dev:start:server": "cross-env NODE_ENV=development node -r esm ./server.js",
+    "dev": "cross-env NODE_ENV=development npm-run-all --parallel dev:client",
 
+    "dev:client": "cross-env NODE_ENV=development npm-run-all --parallel dev:client:build dev:client:start",
+    "dev:client:build": "cross-env NODE_ENV=development webpack --mode=development --config=webpack/webpack.config.js --env project=client",
+    "dev:client:start": "cross-env NODE_ENV=development webpack serve --mode=development --config=webpack/webpack.config.js --env project=client",
+    "dev:client-server": "cross-env NODE_ENV=development npm-run-all --sequential dev:client:build dev:client-server:start",
+    "dev:client-server:start": "cross-env NODE_ENV=development node -r esm ./client/server.js",
+
+    "---": "---",
     "staging": "cross-env NODE_ENV=staging npm-run-all --sequential staging:build staging:start",
     "staging:build": "cross-env NODE_ENV=staging npm run build",
     "staging:deploy": "node -r esm build/deploy.js staging --version=$(git rev-parse HEAD)",

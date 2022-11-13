@@ -34,7 +34,7 @@
     "lint:js:fix": "eslint src --ext .js --fix",
     "lint:styles": "stylelint src/**/*.vue",
     "lint:styles:fix": "stylelint src/**/*.vue --fix",
-    "lint:vue": "eslint src --ext .vue",
+    "lint:vue": "eslint client/src/**/* --ext .vue",
     "lint:vue:fix": "eslint src --ext .vue --fix",
     "lint:fix": "eslint src --ext .js --fix",
     "prettify": "prettier \"src/**/*.{js,vue}\" --write"
@@ -119,7 +119,7 @@
     "@babel/runtime": "^7.18.6",
     "@vue/cli-plugin-babel": "^5.0.6",
     "@vue/cli-service": "^5.0.6",
-    "eslint": "^8.19.0",
+    "eslint": "^7.0.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-alias": "^1.1.2",

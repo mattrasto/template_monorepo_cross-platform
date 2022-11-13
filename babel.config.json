@@ -1,4 +1,9 @@
 {
+  "babelrcRoots": [
+    ".",
+    "api",
+    "client",
+  ],
   "presets": [
     [
       "@babel/preset-env",

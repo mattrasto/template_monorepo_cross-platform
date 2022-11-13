@@ -20,7 +20,6 @@ const CLIENT_COMPILED = path.resolve(OUTPUT_DIRECTORY, CLIENT_FILENAME);
 const CLIENT_HTML_ENTRY = path.resolve(SOURCE_DIRECTORY, ROOT_HTML_FILENAME);
 
 const ALIASES = {
-  // Client aliases
   'vue': '@vue/runtime-dom',
   '@': PROJECT_ROOT,
   '@src': SOURCE_DIRECTORY,

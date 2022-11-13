@@ -1,0 +1,20 @@
+# Base image
+FROM node:14-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
+
+# Workaround for "could not get uid/gid" error
+RUN npm config set unsafe-perm true
+
+# Install and cache app dependencies
+COPY package*.json /app/
+RUN npm install
+
+EXPOSE 3000
+
+# Start app
+ENTRYPOINT ["npm", "run", "dev:start"]

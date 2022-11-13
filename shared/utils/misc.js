@@ -76,3 +76,38 @@ export const copyText = async (text) => {
     logError(e);
   }
 };
+
+// Send email from support
+// Based off of https://medium.com/@imre_7961/nodemailer-with-g-suite-oauth2-4c86049f778a
+// Only allowed in backend environments
+export const sendSupportEmail = async (toAddress, subject, message) => {
+  const privateKey = JSON.parse(process.env.GCP_SERVICE_ADMIN_KEY);
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      type: 'OAuth2',
+      user: SUPPORT_EMAIL,
+      serviceClient: privateKey.client_id,
+      privateKey: privateKey.private_key,
+    },
+  });
+
+  const mailOptions = {
+    from: SUPPORT_EMAIL,
+    to: toAddress,
+    subject,
+    html: message,
+  };
+
+  return new Promise((resolve) => {
+    transporter.sendMail(mailOptions, (error, _info) => {
+      if (error) {
+        logError(`Failed to send email: ${error}`);
+        resolve(false);
+      }
+      resolve(true);
+    });
+  });
+};

@@ -16,6 +16,34 @@ export const forEachAsyncParallel = async (iterable, fn) => {
   await Promise.all(iterable.map(fn));
 };
 
+// Performs a forEachAsyncParallel iteration on serial chunks of input array (eg. [1, 2, 3, 4] -> [1, 2] then [3, 4])
+// iterFn(...args, chunkNum) is run on every iterable element
+// chunkFn(chunkData, chunkNum) is run at the end of every chunk
+// NOTE: This will return promise rejections as well
+export const forEachAsyncParallelChunked = async (
+  iterable,
+  iterFn,
+  chunkSize,
+  chunkFn = () => {},
+  id = 'null',
+) => {
+  if (!chunkSize || !Number.isInteger(chunkSize))
+    throw new TypeError('chunkSize must be a positive integer');
+  if (chunkSize <= 0) throw new RangeError('chunkSize must be a positive integer');
+
+  const allChunkNums = [...Array(Math.ceil(iterable.length / chunkSize)).keys()];
+  let chunkData = []; // Declare up here to only load current chunk in memory
+  await forEachAsyncSeries(allChunkNums, async (chunkNum) => {
+    chunkData = iterable.slice(chunkNum * chunkSize, (chunkNum + 1) * chunkSize);
+    // Closure to inject chunkNum as last argument
+    async function boundIterFn(...args) {
+      return iterFn(...args, chunkNum);
+    }
+    await forEachAsyncParallel(chunkData, boundIterFn, id);
+    await chunkFn(chunkData, chunkNum);
+  });
+};
+
 // Returns a promise that resolves after time
 export const pTimeout = (time) => new Promise((resolve) => setTimeout(resolve, time));
 

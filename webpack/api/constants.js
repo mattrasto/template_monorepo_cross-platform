@@ -1,14 +1,17 @@
 const path = require('path');
 const { API_ROOT } = require('../common/constants.js');
+const rootConstants = require('../common/constants.js');
 
 const SOURCE_DIRECTORY_NAME = 'src';
 const BUNDLES_DIRECTORY_NAME = 'dist';
+
+const ENTRY_FILENAME = 'server.js';
 
 const PROJECT_ROOT = API_ROOT;
 const OUTPUT_DIRECTORY = path.resolve(PROJECT_ROOT, BUNDLES_DIRECTORY_NAME);
 const SOURCE_DIRECTORY = path.resolve(PROJECT_ROOT, SOURCE_DIRECTORY_NAME);
 
-const API_ENTRY = path.resolve(SOURCE_DIRECTORY, 'server.js');
+const PROJECT_ENTRY = path.resolve(SOURCE_DIRECTORY, ENTRY_FILENAME);
 
 const ALIASES = {
   '@': PROJECT_ROOT,
@@ -25,9 +28,12 @@ const ALIASES = {
 }
 
 module.exports = {
-  API_ENTRY,
+  ...rootConstants,
+  ALIASES: {
+    ...ALIASES,
+    ...rootConstants.ALIASES
+  },
+  PROJECT_ENTRY,
+  ENTRY_FILENAME,
   OUTPUT_DIRECTORY,
-  PROJECT_ROOT,
-  SOURCE_DIRECTORY,
-  ALIASES,
 };

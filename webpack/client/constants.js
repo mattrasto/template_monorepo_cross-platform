@@ -1,22 +1,21 @@
 const path = require('path');
-const { CLIENT_ROOT } = require('../common/constants.js');
+const rootConstants = require('../common/constants.js');
 
 const STATIC_DIRECTORY_NAME = 'static';
 const SOURCE_DIRECTORY_NAME = 'src';
 const BUNDLES_DIRECTORY_NAME = 'dist';
 
 const CLIENT_FILENAME = 'main.js';
-const APP_FILENAME = 'app.js';
+const ENTRY_FILENAME = 'app.js';
 const ROOT_HTML_FILENAME = 'index.html';
 
-const PROJECT_ROOT = CLIENT_ROOT;
+const PROJECT_ROOT = rootConstants.CLIENT_ROOT;
 const OUTPUT_DIRECTORY = path.resolve(PROJECT_ROOT, BUNDLES_DIRECTORY_NAME);
 const STATIC_DIRECTORY = path.resolve(PROJECT_ROOT, STATIC_DIRECTORY_NAME);
 const SOURCE_DIRECTORY = path.resolve(PROJECT_ROOT, SOURCE_DIRECTORY_NAME);
 const MODULES_DIRECTORY = path.resolve(PROJECT_ROOT, 'node_modules');
 
-const CLIENT_ENTRY = path.resolve(SOURCE_DIRECTORY, APP_FILENAME);
-const CLIENT_COMPILED = path.resolve(OUTPUT_DIRECTORY, CLIENT_FILENAME);
+const PROJECT_ENTRY = path.resolve(SOURCE_DIRECTORY, ENTRY_FILENAME);
 const CLIENT_HTML_ENTRY = path.resolve(SOURCE_DIRECTORY, ROOT_HTML_FILENAME);
 
 const ALIASES = {
@@ -31,15 +30,17 @@ const ALIASES = {
 };
 
 module.exports = {
+  ...rootConstants,
+  ALIASES: {
+    ...ALIASES,
+    ...rootConstants.ALIASES
+  },
   OUTPUT_DIRECTORY,
-  PROJECT_ROOT,
-  CLIENT_COMPILED,
-  CLIENT_ENTRY,
+  PROJECT_ENTRY,
   CLIENT_HTML_ENTRY,
   SOURCE_DIRECTORY,
   MODULES_DIRECTORY,
   STATIC_DIRECTORY,
-  APP_FILENAME,
-  ALIASES,
+  ENTRY_FILENAME,
   STATIC_DIRECTORY_NAME
 };

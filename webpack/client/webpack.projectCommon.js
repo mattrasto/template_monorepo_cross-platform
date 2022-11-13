@@ -3,33 +3,21 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 
 const { VueLoaderPlugin } = require('vue-loader');
-const rootConstants = require('../common/constants.js');
-const projectConstants = require('./constants.js');
-
-const constants = {
-  ...rootConstants,
-  ...projectConstants,
-  ALIASES: {
-    ...rootConstants.ALIASES,
-    ...projectConstants.ALIASES,
-  },
-}
+const constants = require('./constants.js');
 
 module.exports = {
   target: 'web',
-  entry: [constants.CLIENT_ENTRY],
+  entry: [constants.PROJECT_ENTRY],
   output: {
-    filename: constants.APP_FILENAME,
+    publicPath: '/',
+    filename: constants.ENTRY_FILENAME,
     path: constants.OUTPUT_DIRECTORY,
-    publicPath: '/'
-  },
-  resolve: {
-    modules: ['src', 'static', 'node_modules'], // Base paths for absolute imports
-    extensions: ['*', '.js', '.scss', '.css', '.vue'],
-    alias: constants.ALIASES
   },
   optimization: {
-    nodeEnv: false // Prevents Webpack from overwriting NODE_ENV
+    nodeEnv: false, // Prevents Webpack from overwriting NODE_ENV
+  },
+  resolve: {
+    alias: constants.ALIASES,
   },
   plugins: [
     new VueLoaderPlugin(),
@@ -62,8 +50,6 @@ module.exports = {
       NODE_ENV: null,
       HOST: null,
       PORT: null,
-      COMMIT_REF: process.env.COMMIT_REF || '',
-      BUILD_VERSION: process.env.BUILD_VERSION || '',
     })
   ]
 };

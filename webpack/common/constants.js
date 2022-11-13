@@ -8,7 +8,6 @@ const API_ROOT = path.resolve(REPO_ROOT, 'api');
 const MODULES_DIRECTORY = path.resolve(REPO_ROOT, 'node_modules');
 
 const ALIASES = {
-  '@': REPO_ROOT,
   '@client': CLIENT_ROOT,
   '@shared': SHARED_ROOT,
   '@utils': path.resolve(SHARED_ROOT, 'utils'),

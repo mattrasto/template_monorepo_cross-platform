@@ -4,7 +4,7 @@ import history from 'connect-history-api-fallback';
 import express from 'express';
 import path from 'path';
 
-import CONFIG from '../config.js';
+import CONFIG from '@config';
 
 export const rootRouter = express.Router();
 

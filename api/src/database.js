@@ -3,7 +3,7 @@
 import Sequelize from 'sequelize';
 import requireContext from 'require-context';
 import path from 'path';
-import { SERVER_CONFIG } from './config.js';
+import { CONFIG } from '@config';
 
 const models = {};
 let sequelize = null; // eslint-disable-line import/no-mutable-exports
@@ -11,10 +11,10 @@ let sequelize = null; // eslint-disable-line import/no-mutable-exports
 function getDefaultConfig() {
   return {
     dialect: 'postgres',
-    database: SERVER_CONFIG.database.dbSchema,
+    database: CONFIG.database.dbSchema,
     username: process.env.DB_USER,
     password: process.env.DB_PASS,
-    host: SERVER_CONFIG.database.dbHost,
+    host: CONFIG.database.dbHost,
     port: 5432,
     pool: {
       max: 15,
@@ -40,7 +40,7 @@ async function initDatabase(config) {
   // Init all models
   // NOTE: Need to manually import all models when using Webpack + Sequelize
   const context = requireContext(
-    path.resolve(SERVER_CONFIG.projectRoot, 'src', 'models'),
+    path.resolve(CONFIG.projectRoot, 'src', 'models'),
     true,
     /.*/,
     'sync',

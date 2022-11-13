@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
-import { SERVER_CONFIG } from '@config';
-import { ENVIRONMENT, ENVIRONMENTS } from '@constants';
+import { CONFIG } from '@config';
+import { ENVIRONMENT, ENVIRONMENTS } from '@shared/environments.js';
 import controllers from '@controllers';
 import { initDatabase } from '@database';
 import { reportMiddleware } from '@utils/middleware.js';
@@ -46,7 +46,7 @@ async function main() {
       accessToken: null,
     });
   }
-  console.log('API_PORT', SERVER_CONFIG.port);
+  console.log('API_PORT', CONFIG.port);
   app.listen(SERVER_CONFIG.port, () =>
     console.log(`Magic API listening on port ${SERVER_CONFIG.port}`),
   );

@@ -1,10 +1,11 @@
 // Client config
 
-const assignDeep = require('assign-deep');
+import { deepMerge } from '@utils/datatypes/object.js';
+import { ENVIRONMENT, ENVIRONMENTS } from '@shared/environments.js';
 
 // Environment-specific config
 const env = {
-  development: {
+  [ENVIRONMENTS.DEV]: {
     clientProtocol: 'http',
     clientHost: process.env.HOST || 'localhost',
     clientPort: process.env.PORT || 8080,
@@ -56,7 +57,7 @@ const env = {
       vuexTrace: true
     }
   },
-  staging: {
+  [ENVIRONMENTS.STAGING]: {
     clientProtocol: 'https',
     clientHost: process.env.HOST || 'staging.propheta.io',
     clientPort: process.env.PORT || 80,
@@ -82,7 +83,7 @@ const env = {
       },
     },
   },
-  production: {
+  [ENVIRONMENTS.PROD]: {
     clientProtocol: 'https',
     clientHost: process.env.HOST || 'propheta.io',
     clientPort: process.env.PORT || 80,
@@ -107,11 +108,11 @@ const env = {
       },
     },
   }
-}[process.env.NODE_ENV || 'development'];
+}[ENVIRONMENT];
 
 // Shared config
-module.exports = assignDeep(env, {
-  environment: process.env.NODE_ENV,
+export const CONFIG = deepMerge(env, {
+  environment: ENVIRONMENT,
   projectRoot: __dirname,
   services: {}
 });

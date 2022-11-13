@@ -21,6 +21,7 @@ const CLIENT_HTML_ENTRY = path.resolve(SOURCE_DIRECTORY, ROOT_HTML_FILENAME);
 const ALIASES = {
   'vue': '@vue/runtime-dom',
   '@': PROJECT_ROOT,
+  '@config': path.resolve(PROJECT_ROOT, 'config'),
   '@src': SOURCE_DIRECTORY,
   '@components': path.resolve(SOURCE_DIRECTORY, 'components'),
   '@pages': path.resolve(SOURCE_DIRECTORY, 'pages'),

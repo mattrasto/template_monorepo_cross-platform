@@ -15,16 +15,14 @@ const PROJECT_ENTRY = path.resolve(SOURCE_DIRECTORY, ENTRY_FILENAME);
 
 const ALIASES = {
   '@': PROJECT_ROOT,
+  '@config': path.resolve(PROJECT_ROOT, 'config'),
   '@src': SOURCE_DIRECTORY,
   '@actions': path.resolve(SOURCE_DIRECTORY, 'actions'),
-  '@config': path.resolve(SOURCE_DIRECTORY, 'config'),
   '@controllers': path.resolve(SOURCE_DIRECTORY, 'controllers'),
-  '@constants': path.resolve(SOURCE_DIRECTORY, 'constants'),
-  '@database': path.resolve(SOURCE_DIRECTORY, 'database'),
+  '@constants': path.resolve(SOURCE_DIRECTORY, 'constants.js'),
+  '@database': path.resolve(SOURCE_DIRECTORY, 'database.js'),
   '@endpoints': path.resolve(SOURCE_DIRECTORY, 'endpoints'),
   '@models': path.resolve(SOURCE_DIRECTORY, 'models'),
-  '@reports': path.resolve(SOURCE_DIRECTORY, 'utils/helpers/reports'),
-  '@services': path.resolve(SOURCE_DIRECTORY, 'utils/services'),
 }
 
 module.exports = {

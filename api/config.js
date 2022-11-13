@@ -1,9 +1,8 @@
-/* eslint-disable no-console */
 // API config
 
-import deepmerge from 'deepmerge';
+import { deepMerge } from '@utils/datatypes/object.js';
 import path from 'path';
-import { ENVIRONMENT, ENVIRONMENTS } from './constants.js';
+import { ENVIRONMENT, ENVIRONMENTS } from '@shared/environments.js';
 
 // Environment-specific config
 const env = {
@@ -55,10 +54,9 @@ const env = {
   },
 }[ENVIRONMENT];
 
-console.log(env);
-
 // Shared config
-const SERVER_CONFIG = deepmerge(env, {
+export const CONFIG = deepMerge(env, {
+  // environment: ENVIRONMENT,
   projectRoot: path.resolve(__dirname, '..'),
   platform: {
     // If no admin user exists, create
@@ -66,5 +64,3 @@ const SERVER_CONFIG = deepmerge(env, {
     ensureAdmin: true,
   },
 });
-
-export { SERVER_CONFIG };

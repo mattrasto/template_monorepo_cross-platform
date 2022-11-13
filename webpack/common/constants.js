@@ -12,6 +12,7 @@ const ALIASES = {
   '@shared': SHARED_ROOT,
   '@utils': path.resolve(SHARED_ROOT, 'utils'),
   '@logging': path.resolve(SHARED_ROOT, 'utils', 'logging.js'),
+  '@services': path.resolve(SHARED_ROOT, 'utils', 'services'),
 };
 
 module.exports = {

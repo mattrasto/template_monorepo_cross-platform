@@ -1,4 +1,4 @@
-const { SERVER_CONFIG } = require('../config.js');
+import { SERVER_CONFIG } from '@config';
 
 const defaults = {
   database: SERVER_CONFIG.database.dbSchema,

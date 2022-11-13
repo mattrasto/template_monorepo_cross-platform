@@ -1,7 +1,7 @@
 import auth0 from 'auth0-js';
 import { logError } from '@utils/logging.js';
 
-import config from '@/config.js';
+import config from '@config';
 
 const webAuth = new auth0.WebAuth({
   domain: config.services.auth0.domain,

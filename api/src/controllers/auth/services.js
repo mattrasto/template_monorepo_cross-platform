@@ -1,7 +1,7 @@
 import { calculateFutureTimestamp } from '@utils/datatypes/date.js';
 import actions from '@actions';
 import { sendSupportEmail } from '@utils/misc.js';
-import { SERVER_CONFIG } from '@config';
+import { CONFIG } from '@config';
 import crypto from 'crypto';
 
 // Creates a temporary token, converting expires from string format (eg. '1d' = '1 day') to timestamp
@@ -13,7 +13,7 @@ export async function createTemporaryToken(expires, data) {
 }
 
 export async function sendResetPasswordEmail(email, resetPasswordToken) {
-  const forgotUrl = `${SERVER_CONFIG.client.url}/login`;
+  const forgotUrl = `${CONFIG.client.url}/login`;
   const resetUrl = `${forgotUrl}?token=${resetPasswordToken}&email=${email}`;
   const emailHtml = `
     <p>Someone recently requested a password reset for your account on Magic.

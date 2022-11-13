@@ -6,7 +6,7 @@ import { rootRouter } from './server/index.js';
 const express = require('express');
 const { redirectToHTTPS } = require('express-http-to-https');
 
-const CONFIG = require('./config.js');
+import { CONFIG } from '@config';
 
 const app = express();
 app.use(compression());

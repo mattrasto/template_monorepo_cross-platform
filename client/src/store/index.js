@@ -1,8 +1,8 @@
 import Vuex from 'vuex';
 import { mutationLogger, actionLogger } from 'vuex-trace';
-import config from '@/config.js';
+import { CONFIG } from '@config';
 
-const plugins = config.dev?.vuexTrace
+const plugins = CONFIG.dev?.vuexTrace
   ? [mutationLogger(), actionLogger()]
   : [];
 

@@ -1,4 +1,4 @@
-import config from '@/config.js';
+import { ENVIRONMENT } from '@shared/environments.js';
 import analyticsScripts from '@utils/analytics/embedScripts.js';
 
 export const metaInfo = {
@@ -101,5 +101,5 @@ export const metaInfo = {
       content: '@propheta'
     }
   ],
-  ...analyticsScripts[config.environment]
+  ...analyticsScripts[ENVIRONMENT]
 };

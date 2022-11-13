@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { ENVIRONMENT, ENVIRONMENTS } from '@constants';
+import { ENVIRONMENT, ENVIRONMENTS } from '@shared/environments.js';
 import { SecretManagerServiceClient } from '@google-cloud/secret-manager';
 
 const SECRET_CONFIGS = {

@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import config from '@/config.js';
+import { CONFIG } from '@config';
 import { useMeta } from 'vue-meta';
 import { metaInfo } from './metaInfo.js';
 
@@ -35,9 +35,9 @@ export default {
     };
   },
   async created() {
-    if (config.environment === 'development')
+    if (CONFIG.environment === 'development')
       console.warn('⚠️ Propheta Platform - Development Version ⚠️');
-    else if (config.environment === 'staging')
+    else if (CONFIG.environment === 'staging')
       console.warn('✔️ Propheta Platform - Staging Version ✔️');
 
     // if (!this.$store.getters.isBot) {

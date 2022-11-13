@@ -1,6 +1,6 @@
 // import Vue from 'vue';
 import { createApp } from 'vue';
-import { createMetaManager } from 'vue-meta'
+import { createMetaManager } from 'vue-meta';
 
 import { store } from '@store/index.js';
 
@@ -16,6 +16,6 @@ async function attach() {
   return app;
 }
 
-const app = attach()
+const app = attach();
 
 export { app };

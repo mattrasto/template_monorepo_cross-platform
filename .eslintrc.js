@@ -7,6 +7,8 @@ module.exports = {
   },
   rules: {
     'array-callback-return': 1,
+    curly: ['error', 'multi'],
+    'nonblock-statement-body-position': ['error', 'any'],
     'arrow-body-style': ['error', 'as-needed'],
     'arrow-parens': [2, 'always'],
     'comma-dangle': [0, 'always-multiline'],

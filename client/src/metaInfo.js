@@ -4,8 +4,7 @@ import analyticsScripts from '@utils/analytics/embedScripts.js';
 export const metaInfo = {
   title: 'Propheta',
   // Only prepend "Propheta - " if not already contained
-  titleTemplate: (titleChunk) =>
-    titleChunk.includes('Propheta') ? titleChunk : `Propheta - ${titleChunk}`,
+  titleTemplate: (titleChunk) => (titleChunk.includes('Propheta') ? titleChunk : `Propheta - ${titleChunk}`),
   htmlAttrs: { lang: 'en', amp: true },
   link: [
     {

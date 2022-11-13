@@ -1,5 +1,5 @@
 <template>
-  <metainfo></metainfo>
+  <metainfo />
   <!-- <div id="app">
     <div
       id="app-container"
@@ -36,9 +36,9 @@ export default {
   },
   async created() {
     if (CONFIG.environment === 'development')
-      console.warn('⚠️ Propheta Platform - Development Version ⚠️');
+      console.warn('⚠️ Propheta Platform - Development Version ⚠️'); // eslint-disable-line no-console
     else if (CONFIG.environment === 'staging')
-      console.warn('✔️ Propheta Platform - Staging Version ✔️');
+      console.warn('✔️ Propheta Platform - Staging Version ✔️'); // eslint-disable-line no-console
 
     // if (!this.$store.getters.isBot) {
     //   await this.$store.dispatch('AUTH_VERIFY');
@@ -112,10 +112,10 @@ p {
 
 img {
   -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Old versions of Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Safari */
+  user-select: none; /* Konqueror HTML */
+  user-select: none; /* Old versions of Firefox */
+  user-select: none; /* Internet Explorer/Edge */
   user-select: none;
 }
 
@@ -135,7 +135,7 @@ img {
 }
 
 @font-face {
-  font-family: 'Quicksand';
+  font-family: Quicksand;
   src: url('@static/fonts/Quicksand.ttf') format('truetype-variations');
 }
 </style>

@@ -9,7 +9,7 @@ import cors from 'cors';
 import compression from 'compression';
 import minify from 'express-minify';
 import { initRouters } from './routes.js';
-import { initSecrets } from './secrets.js';
+// import { initSecrets } from './secrets.js';
 import { migrateDb } from '../init/migration.js';
 
 const corsOptions = {
@@ -35,7 +35,7 @@ async function main() {
   await initDatabase();
   await migrateDb();
   initRouters(app);
-  if (SERVER_CONFIG.platform.ensureAdmin) {
+  if (CONFIG.platform.ensureAdmin)
     await controllers.users.CREATE({
       email: 'admin@mattrasto.me',
       fullName: 'Magic Admin',
@@ -45,10 +45,8 @@ async function main() {
       authLevel: 'user',
       accessToken: null,
     });
-  }
   console.log('API_PORT', CONFIG.port);
-  app.listen(SERVER_CONFIG.port, () =>
-    console.log(`Magic API listening on port ${SERVER_CONFIG.port}`),
+  app.listen(CONFIG.port, () => console.log(`Magic API listening on port ${CONFIG.port}`),
   );
 }
 

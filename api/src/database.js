@@ -32,7 +32,7 @@ function getDefaultConfig() {
 
 // Init platform database connection and ORM
 async function initDatabase(config) {
-  console.log(config || getDefaultConfig());
+  // console.log(config || getDefaultConfig());
   if (sequelize) return; // Don't re-init if already done
   if (config !== undefined) sequelize = new Sequelize(config);
   else sequelize = new Sequelize(getDefaultConfig());
@@ -55,9 +55,8 @@ async function initDatabase(config) {
     });
   // Create associations
   Object.keys(models).forEach((modelName) => {
-    if (models[modelName].associate) {
+    if (models[modelName].associate)
       models[modelName].associate(models);
-    }
   });
 }
 

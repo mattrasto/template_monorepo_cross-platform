@@ -33,5 +33,6 @@ module.exports = {
     'vue/no-deprecated-dollar-listeners-api': 0, // TODO: Remove when we upgrade to Vue 3
     'vue/attribute-hyphenation': 0, // remove this after updating all attributes to be hyphenated- otherwise autofix screws up every attribute
     'vue/no-deprecated-v-bind-sync': 0, // TODO: Remove when we upgrade to Vue 3
+    'vue/comment-directive': 'off',
   },
 };

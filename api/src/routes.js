@@ -9,9 +9,9 @@ function initRouters(app) {
 
   Object.keys(endpoints).forEach((routerName) => {
     const router = endpoints[routerName];
-    if (ROUTER_SPECIAL_ROUTES[routerName]) {
+    if (ROUTER_SPECIAL_ROUTES[routerName])
       app.use(ROUTER_SPECIAL_ROUTES[routerName], router);
-    } else {
+    else {
       // Remove "Router" from the router name to get the route string
       const routeName = `/${routerName.replace('Router', '')}`;
       app.use(routeName, router);

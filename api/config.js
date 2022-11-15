@@ -56,7 +56,7 @@ const env = {
 
 // Shared config
 export const CONFIG = deepMerge(env, {
-  // environment: ENVIRONMENT,
+  environment: ENVIRONMENT,
   projectRoot: path.resolve(__dirname, '..'),
   platform: {
     // If no admin user exists, create

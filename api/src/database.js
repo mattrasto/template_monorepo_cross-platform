@@ -1,7 +1,6 @@
 // Initializes sequelize models
 // Loosely based on https://github.com/sequelize/express-example
 import Sequelize from 'sequelize';
-import requireContext from 'require-context';
 import path from 'path';
 import { CONFIG } from '@config';
 
@@ -32,25 +31,16 @@ function getDefaultConfig() {
 
 // Init platform database connection and ORM
 async function initDatabase(config) {
-  // console.log(config || getDefaultConfig());
   if (sequelize) return; // Don't re-init if already done
   if (config !== undefined) sequelize = new Sequelize(config);
   else sequelize = new Sequelize(getDefaultConfig());
   sequelize.sync({ force: true });
-  // Init all models
-  // NOTE: Need to manually import all models when using Webpack + Sequelize
-  const context = requireContext(
-    path.resolve(CONFIG.projectRoot, 'src', 'models'),
-    true,
-    /.*/,
-    'sync',
-  );
-  context
-    .keys()
-    .map(context)
+
+  // Init all models dynamically
+  const modelsDirExports = Object.values(await import(path.resolve(CONFIG.projectRoot, 'src', 'models') /* @vite-ignore */));
+  modelsDirExports
     .forEach((module) => {
-      if (!module.default) return; // Ignore index.js
-      const sequelizeModel = module.default(sequelize);
+      const sequelizeModel = module(sequelize);
       models[sequelizeModel.name] = sequelizeModel;
     });
   // Create associations

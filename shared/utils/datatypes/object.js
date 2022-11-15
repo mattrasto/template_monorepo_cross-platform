@@ -1,4 +1,5 @@
 import { isEqual } from 'lodash';
+import deepmerge from 'deepmerge';
 
 // Returns all the keys in `toObject` that have a different value
 // when compared with `fromObject`
@@ -16,8 +17,6 @@ export const getDiffKeys = (fromObject, toObject, ignoreKeys = []) => {
 // -- "overwrite" (prefer array from "updates")
 // -- "concatenate" (concatenate "updates" array to "source" array)
 export const deepMerge = (source, updates, arrayMethod = 'overwrite') => {
-  // QUESTION: Why does this throw "deepmerge is not a function" when placed globally?
-  const deepmerge = require('deepmerge'); // eslint-disable-line global-require
   if (arrayMethod === 'overwrite') {
     const overwriteMerge = (sourceArray, updatesArray) => updatesArray;
     return deepmerge(source, updates, { arrayMerge: overwriteMerge });

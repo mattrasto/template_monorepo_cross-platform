@@ -109,4 +109,4 @@ async function track({ eventName, data }) {
   });
 }
 
-export { init, identify, updateUserData, track };
+export default { init, identify, updateUserData, track };

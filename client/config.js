@@ -113,6 +113,5 @@ const env = {
 // Shared config
 export const CONFIG = deepMerge(env, {
   environment: ENVIRONMENT,
-  projectRoot: __dirname,
   services: {}
 });

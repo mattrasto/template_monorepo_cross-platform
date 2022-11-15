@@ -1,8 +1,8 @@
-const { ENVIRONMENTS } = require('../../src/constants.js');
+// const { ENVIRONMENTS } = require('../../src/constants.js');
 const rules = require('./rules.js');
 
 module.exports = {
-  mode: ENVIRONMENTS.DEV,
+  mode: 'development',
   devtool: 'inline-source-map',
   module: {
     rules,

@@ -18,9 +18,8 @@
 <script>
 import { CONFIG } from '@config';
 import { useMeta } from 'vue-meta';
+import analytics from '@utils/analytics';
 import { metaInfo } from './metaInfo.js';
-
-const analytics = require('@utils/analytics');
 
 export default {
   name: 'App',

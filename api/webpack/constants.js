@@ -1,14 +1,12 @@
 const path = require('path');
-// import path from 'path';
-const { API_ROOT } = require('../common/constants.js');
-const rootConstants = require('../common/constants.js');
+const rootConstants = require('../../shared/build/constants.js');
 
 const SOURCE_DIRECTORY_NAME = 'src';
 const BUNDLES_DIRECTORY_NAME = 'dist';
 
 const ENTRY_FILENAME = 'server.js';
 
-const PROJECT_ROOT = API_ROOT;
+const PROJECT_ROOT = rootConstants.API_ROOT;
 const OUTPUT_DIRECTORY = path.resolve(PROJECT_ROOT, BUNDLES_DIRECTORY_NAME);
 const SOURCE_DIRECTORY = path.resolve(PROJECT_ROOT, SOURCE_DIRECTORY_NAME);
 
@@ -26,7 +24,6 @@ const ALIASES = {
   '@models': path.resolve(SOURCE_DIRECTORY, 'models'),
 };
 
-// export default {
 module.exports = {
   ...rootConstants,
   ALIASES: {

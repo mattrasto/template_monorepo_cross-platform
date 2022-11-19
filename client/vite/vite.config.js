@@ -1,9 +1,6 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-const constants = require('./constants.js');
-
-console.log(0, constants.SOURCE_DIRECTORY);
-console.log(1, constants.OUTPUT_DIRECTORY);
+const constants = require('../../shared/build/constants.js');
 
 export default defineConfig({
   root: constants.SOURCE_DIRECTORY,

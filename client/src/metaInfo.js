@@ -7,24 +7,24 @@ export const metaInfo = {
   titleTemplate: (titleChunk) => (titleChunk.includes('Propheta') ? titleChunk : `Propheta - ${titleChunk}`),
   htmlAttrs: { lang: 'en', amp: true },
   link: [
-    {
-      rel: 'icon',
-      type: 'image/png',
-      href: '/static/img/favicon-16x16.png',
-      sizes: '16x16'
-    },
-    {
-      rel: 'icon',
-      type: 'image/png',
-      href: '/static/img/favicon-64x64.png',
-      sizes: '64x64'
-    },
-    {
-      rel: 'icon',
-      type: 'image/png',
-      href: '/static/img/favicon-32x32.png',
-      sizes: '32x32'
-    },
+    // {
+    //   rel: 'icon',
+    //   type: 'image/png',
+    //   href: '/static/img/favicon-16x16.png',
+    //   sizes: '16x16'
+    // },
+    // {
+    //   rel: 'icon',
+    //   type: 'image/png',
+    //   href: '/static/img/favicon-32x32.png',
+    //   sizes: '32x32'
+    // },
+    // {
+    //   rel: 'icon',
+    //   type: 'image/png',
+    //   href: '/static/img/favicon-64x64.png',
+    //   sizes: '64x64'
+    // },
     {
       rel: 'stylesheet',
       href: 'https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css'

@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-const constants = require('../../shared/build/constants.js');
+const constants = require('./constants.js');
 
 export default defineConfig({
   root: constants.SOURCE_DIRECTORY,
@@ -14,5 +14,6 @@ export default defineConfig({
   build: {
     outDir: constants.OUTPUT_DIRECTORY,
     emptyOutDir: true,
+    sourcemap: true,
   }
 });

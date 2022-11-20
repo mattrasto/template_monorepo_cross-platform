@@ -1,24 +1,19 @@
 <template>
   <metainfo />
-  <!-- <div id="app">
+  <div id="app">
     <div
       id="app-container"
-      :class="{
-        'full-screen-height': desktopLanding,
-        'hide-scrollbar': true
-      }"
+      class="hide-scrollbar"
     >
-      <p>Hello World</p>
-      <router-view></router-view>
+      <router-view />
     </div>
-  </div> -->
-  <p>Hello World</p>
+  </div>
 </template>
 
 <script>
 import { CONFIG } from '@config';
 import { useMeta } from 'vue-meta';
-import analytics from '@utils/analytics';
+import analytics from '@analytics';
 import { metaInfo } from './metaInfo.js';
 
 export default {

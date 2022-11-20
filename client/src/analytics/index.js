@@ -1,7 +1,7 @@
-/* eslint-disable max-len */
 // Analytics tracking middleware
-import { store } from '@store/index.js';
+import { useUserStore } from '@stores/user.js';
 import { waitUntilTrue } from '@utils/async.js';
+import { logWarning } from '@logging';
 import * as trackingClients from './clients/index.js';
 import events from './events.js';
 
@@ -12,7 +12,7 @@ const ANALYTICS_DISABLED =
   window.navigator.userAgent.toLowerCase().includes('prerender');
 
 // Initializes all analytics clients
-function init() {
+export function init() {
   if (ANALYTICS_DISABLED) return;
   Object.values(trackingClients).forEach((client) => {
     if (client.init) client.init();
@@ -20,7 +20,7 @@ function init() {
 }
 
 // Identifies the user across all analytics clients
-function identify(userId) {
+export function identify(userId) {
   if (ANALYTICS_DISABLED) return;
   if (!userId) return; // TODO: Log error
   Object.values(trackingClients).forEach((client) => {
@@ -29,36 +29,39 @@ function identify(userId) {
 }
 
 // Identifies the user across all analytics clients
-function updateUserData(userProperties) {
+export function updateUserData(userProperties) {
   if (ANALYTICS_DISABLED) return;
   if (!userProperties) return; // TODO: Log error
+  const userStore = useUserStore();
   if (!userProperties.userId)
-    userProperties.userId = store.getters.authUserDetails.userId;
+    userProperties.userId = userStore.authUserDetails.userId;
   Object.values(trackingClients).forEach((client) => {
     if (client.updateUserData) client.updateUserData(userProperties);
   });
 }
 
 // Tracks an event across all specified clients. If no clients specified, defaults to all available.
-async function track({ eventName, data }) {
+export async function track({ eventName, data }) {
   if (ANALYTICS_DISABLED) return;
   if (!Object.keys(events).includes(eventName)) {
-    console.warn(
+    logWarning(
       `Warning: Tracking event with name ${eventName} cannot be found`
     );
     return;
   }
+
+  const userStore = useUserStore();
 
   // Attach global event data attributes
   if (data) {
     if (!data.currentPath) data.currentPath = window.location.pathname;
     if (!data.queryParams) data.queryParams = window.location.search;
     if (!data.collaborationRole)
-      data.collaborationRole = store.getters.authUserCollaborationRole;
-    await waitUntilTrue(() => store.getters.isOptimizeLoaded, 1000);
+      data.collaborationRole = userStore.authUserCollaborationRole;
+    await waitUntilTrue(() => userStore.isOptimizeLoaded, 1000);
     // Add user-specific analytics metadata
     // TODO: When guest users are implemented, ungate
-    const analyticsMetadata = store.getters.authUserMetadata?.analytics;
+    const analyticsMetadata = userStore.authUserMetadata?.analytics;
     if (analyticsMetadata) {
       const curTime = new Date();
       const oldSessions = analyticsMetadata.sessions.slice(
@@ -74,9 +77,7 @@ async function track({ eventName, data }) {
         latestSessionDuration +
         oldSessions
           .map((session) => session.sessionTimeOnSite)
-          .reduce((a, b) => {
-            return a + b;
-          }, 0);
+          .reduce((a, b) => a + b, 0);
       data.totalNumEvents = analyticsMetadata.totalEvents;
       data.currentSessionNum = latestSession.sessionNumber;
       data.sessionTimeOnSite = latestSessionDuration;
@@ -93,20 +94,20 @@ async function track({ eventName, data }) {
       // Initialize client if not already
       // NOTE: If a client defines init() it should return immediately if already initialized
       if (trackingClients[client].init) trackingClients[client].init();
-      if (trackingClients[client].track) {
+      if (trackingClients[client].track)
         trackingClients[client].track({
           data: data || {},
           eventName,
           category,
           description
         });
-      }
-    } else {
-      console.warn(
+    } else
+      logWarning(
         `Warning: Specified tracking client with name ${client} cannot be found.`
       );
-    }
   });
 }
 
-export default { init, identify, updateUserData, track };
+export default {
+  init, identify, updateUserData, track
+};

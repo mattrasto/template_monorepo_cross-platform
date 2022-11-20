@@ -1,5 +1,5 @@
 import { ENVIRONMENT } from '@shared/environments.js';
-import analyticsScripts from '@utils/analytics/embedScripts.js';
+import analyticsScripts from '@analytics/embedScripts.js';
 
 export const metaInfo = {
   title: 'Propheta',

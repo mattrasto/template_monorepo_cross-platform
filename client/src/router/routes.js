@@ -1,7 +1,10 @@
 /* eslint-disable */
+import RootPage from '@pages/RootPage.vue';
+import StoreTesterPage from '@pages/StoreTesterPage.vue';
 
 const rootRoutes = [
-  // { path: '/', component: LandingPage },
+  { path: '/store', component: StoreTesterPage },
+  { path: '/', component: RootPage },
   // // Maintenance page
   // { path: '/maintenance', component: UnderConstructionPage },
   // // TODO: 404 page

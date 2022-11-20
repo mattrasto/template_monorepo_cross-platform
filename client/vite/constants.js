@@ -1,5 +1,5 @@
 const path = require('path');
-const rootConstants = require('@shared/build/constants.js');
+const rootConstants = require('../../shared/build/constants.js');
 
 const STATIC_DIRECTORY_NAME = 'static';
 const SOURCE_DIRECTORY_NAME = 'src';
@@ -24,8 +24,9 @@ const ALIASES = {
   '@src': SOURCE_DIRECTORY,
   '@components': path.resolve(SOURCE_DIRECTORY, 'components'),
   '@pages': path.resolve(SOURCE_DIRECTORY, 'pages'),
-  '@store': path.resolve(SOURCE_DIRECTORY, 'store'),
+  '@stores': path.resolve(SOURCE_DIRECTORY, 'stores'),
   '@api': path.resolve(SOURCE_DIRECTORY, 'api'),
+  '@analytics': path.resolve(SOURCE_DIRECTORY, 'analytics'),
   '@static': STATIC_DIRECTORY,
 };
 

@@ -1,29 +1,29 @@
 <template>
-  <metainfo />
+  <!-- <metainfo /> -->
   <div id="app">
     <div
       id="app-container"
       class="hide-scrollbar"
     >
-      <router-view />
+      <NuxtPage />
     </div>
   </div>
 </template>
 
 <script>
 import { CONFIG } from '@config';
-import { useMeta } from 'vue-meta';
-import analytics from '@analytics';
-import { metaInfo } from './metaInfo.js';
+// import { useMeta } from 'vue-meta';
+// import analytics from '@analytics';
+// import { metaInfo } from './metaInfo.js';
 
 export default {
   name: 'App',
-  setup() {
-    useMeta(metaInfo);
-  },
+  // setup() {
+  //   useMeta(metaInfo);
+  // },
   data() {
     return {
-      windowWidth: window.innerWidth,
+      // windowWidth: window.innerWidth,
       showLoadingState: false,
       lastActiveInterval: null,
     };
@@ -40,14 +40,14 @@ export default {
     // }
 
     // Initialize analytics clients
-    analytics.init();
+    // analytics.init();
   },
-  async mounted() {
-    this.windowWidth = window.innerWidth;
-    window.addEventListener('resize', () => {
-      this.windowWidth = window.innerWidth;
-    });
-  },
+  // async mounted() {
+  //   this.windowWidth = window.innerWidth;
+  //   window.addEventListener('resize', () => {
+  //     this.windowWidth = window.innerWidth;
+  //   });
+  // },
 };
 </script>
 
@@ -115,17 +115,17 @@ img {
 
 @font-face {
   font-family: 'Niveau Grotesk Regular';
-  src: url('@static/fonts/Niveau Grotesk Regular.otf');
+  src: url('@static/fonts/NiveauGroteskRegular.otf');
 }
 
 @font-face {
   font-family: 'Niveau Grotesk Light';
-  src: url('@static/fonts/Niveau Grotesk Light.otf');
+  src: url('@static/fonts/NiveauGroteskLight.otf');
 }
 
 @font-face {
   font-family: 'Niveau Grotesk Medium';
-  src: url('@static/fonts/Niveau Grotesk Medium.otf');
+  src: url('@static/fonts/NiveauGroteskMedium.otf');
 }
 
 @font-face {

@@ -5,11 +5,12 @@ import { logWarning } from '@logging';
 import * as trackingClients from './clients/index.js';
 import events from './events.js';
 
-const PRERENDER_USER_AGENT =
-  'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/61.0.3159.5 Safari/537.36 Prerender (+https://github.com/prerender/prerender)';
-const ANALYTICS_DISABLED =
-  window.navigator.userAgent === PRERENDER_USER_AGENT ||
-  window.navigator.userAgent.toLowerCase().includes('prerender');
+// const PRERENDER_USER_AGENT =
+//   'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/61.0.3159.5 Safari/537.36 Prerender (+https://github.com/prerender/prerender)';
+// const ANALYTICS_DISABLED =
+//   window.navigator.userAgent === PRERENDER_USER_AGENT ||
+//   window.navigator.userAgent.toLowerCase().includes('prerender');
+const ANALYTICS_DISABLED = false;
 
 // Initializes all analytics clients
 export function init() {

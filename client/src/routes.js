@@ -1,10 +1,8 @@
-/* eslint-disable */
-import RootPage from '@pages/RootPage.vue';
-import StoreTesterPage from '@pages/StoreTesterPage.vue';
-
 const rootRoutes = [
-  { path: '/store', component: StoreTesterPage },
-  { path: '/', component: RootPage },
+  {
+    name: 'store', path: '/store', file: '@pages/StoreTesterPage.vue', meta: { auth: true }
+  },
+  { name: 'root', path: '/', file: '@pages/RootPage.vue' },
   // // Maintenance page
   // { path: '/maintenance', component: UnderConstructionPage },
   // // TODO: 404 page

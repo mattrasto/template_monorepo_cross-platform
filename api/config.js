@@ -58,9 +58,4 @@ const env = {
 export const CONFIG = deepMerge(env, {
   environment: ENVIRONMENT,
   projectRoot: path.resolve(__dirname, '..'),
-  platform: {
-    // If no admin user exists, create
-    // NOTE: Users table must exist
-    ensureAdmin: true,
-  },
 });

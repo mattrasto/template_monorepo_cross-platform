@@ -19,7 +19,7 @@ const ALIASES = {
   '@actions': path.resolve(SOURCE_DIRECTORY, 'actions'),
   '@controllers': path.resolve(SOURCE_DIRECTORY, 'controllers'),
   '@constants': path.resolve(SOURCE_DIRECTORY, 'constants.js'),
-  '@database': path.resolve(SOURCE_DIRECTORY, 'database.js'),
+  '@database': path.resolve(SOURCE_DIRECTORY, 'database', 'database.js'),
   '@endpoints': path.resolve(SOURCE_DIRECTORY, 'endpoints'),
   '@models': path.resolve(SOURCE_DIRECTORY, 'models'),
 };

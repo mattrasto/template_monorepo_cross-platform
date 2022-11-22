@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "dev": "cross-env NODE_ENV=development npm-run-all --parallel dev:client dev:api",
-    "dev:api": "cross-env NODE_ENV=development npm-run-all --parallel dev:api:build dev:api:start",
+    "dev:api": "doppler run -- cross-env NODE_ENV=development npm-run-all --parallel dev:api:build dev:api:start",
     "dev:api:build": "cross-env NODE_ENV=development webpack --watch --mode=development --config=api/webpack/webpack.config.js",
     "dev:api:start": "nodemon --config api/nodemon.json -r esm api/dist/server.js",
     "dev:client": "nuxt dev ./client",
@@ -30,6 +30,7 @@
   "dependencies": {
     "@google-cloud/secret-manager": "^3.12.0",
     "@pinia/nuxt": "^0.4.4",
+    "@prisma/client": "^4.6.1",
     "@vue/runtime-dom": "^3.2.45",
     "assign-deep": "^1.0.1",
     "async": "^3.2.3",
@@ -128,6 +129,7 @@
     "nuxt": "3.0.0",
     "postcss-html": "^1.5.0",
     "prettier": "2.7.1",
+    "prisma": "^4.6.1",
     "sass": "^1.53.0",
     "sass-loader": "^13.0.2",
     "sequelize-cli": "^6.4.1",

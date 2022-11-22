@@ -1,16 +1,14 @@
 /* eslint-disable no-console */
 import { CONFIG } from '@config';
 import { ENVIRONMENT, ENVIRONMENTS } from '@shared/environments.js';
-import controllers from '@controllers';
-// import { initDatabase } from '@database';
 import { reportMiddleware } from '@utils/middleware.js';
 import express from 'express';
 import cors from 'cors';
 import compression from 'compression';
 import minify from 'express-minify';
+import { initDatabase } from '@database';
 import { initRouters } from './routes.js';
 // import { initSecrets } from './secrets.js';
-// import { migrateDb } from '../init/migration.js';
 
 const corsOptions = {
   origin: '*', // TODO: Only whitelist client(s)
@@ -31,21 +29,12 @@ export default app;
 async function main() {
   if (ENVIRONMENT === ENVIRONMENTS.DEV) console.warn('*** Magic - Development Version ***');
   else if (ENVIRONMENT === ENVIRONMENTS.STAGING) console.warn('--- Magic - Staging Version ---');
+
+  // console.log(process.env);
+
   // await initSecrets();
-  // await initDatabase();
-  // await migrateDb();
+  await initDatabase();
   initRouters(app);
-  if (CONFIG.platform.ensureAdmin)
-    await controllers.users.CREATE({
-      email: 'admin@mattrasto.me',
-      fullName: 'Magic Admin',
-      role: 'admin',
-      password: process.env.ADMIN_PASS,
-      phone: null,
-      authLevel: 'user',
-      accessToken: null,
-    });
-  console.log('API_PORT', CONFIG.port);
   app.listen(CONFIG.port, () => console.log(`Magic API listening on port ${CONFIG.port}`));
 }
 

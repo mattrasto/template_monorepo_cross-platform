@@ -1,0 +1,3 @@
+setup:
+  project: propheta
+  config: dev

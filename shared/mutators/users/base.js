@@ -1,4 +1,6 @@
-import { action, mutator } from '@mutators/utils/events.js';
+import {
+  action, mutator, parallel, pass,
+} from '@mutators/utils/events.js';
 
 export class BaseUsers {
   static async CREATE(data) {
@@ -19,13 +21,11 @@ export class BaseUsers {
     //   ],
     // ];
     const events = [
-      [
-        action('Users', 'CREATE', data),
-        [
-          mutator('Projects', 'CREATE', defaultProjectData),
-          mutator('Projects', 'CREATE', defaultProjectData),
-        ]
-      ],
+      pass(action('Users', 'CREATE', data), ['userId']),
+      parallel([
+        mutator('Projects', 'CREATE', defaultProjectData),
+        mutator('Projects', 'CREATE', defaultProjectData),
+      ])
     ];
     return { valid: true, events };
   }

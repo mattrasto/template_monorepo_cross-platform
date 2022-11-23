@@ -5,5 +5,6 @@ export class Users extends BaseUsers {
   static async CREATE(data) {
     const { valid, events } = await super.CREATE(data);
     await processEvents(events);
+    // TODO: Call API
   }
 }

@@ -5,8 +5,11 @@ export const useProjectStore = defineStore('project', {
     projects: [],
   }),
   actions: {
-    async CREATE(data) {
+    async CREATE(data, context) {
+      data.userId = context.userId;
       this.projects.push(data);
+      console.log('CREATE PROJECT', data, context);
+      return data;
     },
   },
 });

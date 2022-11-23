@@ -7,8 +7,10 @@ export const useUserStore = defineStore('user', {
   }),
   actions: {
     // Internal (do not call directly)
-    async CREATE(data) {
+    async CREATE(data, context) {
       this.users.push(data);
+      console.log('CREATE USER', data, context);
+      return data;
     },
     // Public
     async CREATE_USER(data) {

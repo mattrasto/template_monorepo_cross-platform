@@ -1,6 +1,12 @@
 import { isEqual } from 'lodash';
 import deepmerge from 'deepmerge';
 
+export const isObject = (a) => (
+  typeof a === 'object' &&
+  !Array.isArray(a) &&
+  a !== null
+);
+
 // Returns all the keys in `toObject` that have a different value
 // when compared with `fromObject`
 // Optionally ignores keys included in `ignoreKeys`

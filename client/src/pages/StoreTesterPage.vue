@@ -26,10 +26,10 @@ export default {
   methods: {
     ...mapActions(useUserStore, ['CREATE_USER']),
     createValidUser() {
-      this.CREATE_USER({ email: 'mattrasto@gmail.com' });
+      this.CREATE_USER({ userId: '124', email: 'mattrasto@gmail.com' });
     },
     createInvalidUser() {
-      this.CREATE_USER({ email: 'ma' });
+      this.CREATE_USER({ userId: '456', email: 'ma' });
     }
   },
 };

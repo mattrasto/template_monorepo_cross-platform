@@ -7,7 +7,7 @@
     "dev:api": "doppler run -- cross-env NODE_ENV=development npm-run-all --parallel dev:api:build dev:api:start",
     "dev:api:build": "cross-env NODE_ENV=development webpack --watch --mode=development --config=api/webpack/webpack.config.js",
     "dev:api:start": "nodemon --config api/nodemon.json -r esm api/dist/server.js",
-    "dev:client": "nuxt dev ./client",
+    "dev:client": "nuxt dev ./client --port 8080",
     "dev:client:build": "nuxt build ./client",
     "dev:client:start": "nuxt start ./client",
     "---": "---",

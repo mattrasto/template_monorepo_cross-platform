@@ -1,4 +1,4 @@
-import { useUserStore } from '@stores/user.js';
+import { useUserStore } from '@stores/users.js';
 // const userStore = useUserStore();
 
 // Protects routes with an { "admin": true } meta record

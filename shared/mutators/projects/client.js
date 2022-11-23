@@ -5,5 +5,6 @@ export class Projects extends BaseProjects {
   static async CREATE(data, context) {
     const { valid, events } = await super.CREATE(data);
     await processEvents(events, context);
+    return data;
   }
 }

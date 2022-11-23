@@ -11,21 +11,19 @@ export class BaseUsers {
       name: 'Default Project',
     };
     // const events = [
-    //   actionEvent('Users', 'CREATE', data),
-    //   mutatorEvent('Projects', 'CREATE', defaultProjectData),
-    // ];
-    // const events = [
-    //   [
-    //     actionEvent('Users', 'CREATE', data),
-    //     mutatorEvent('Projects', 'CREATE', defaultProjectData),
-    //   ],
+    //   pass(action('Users', 'CREATE', data), ['userId']),
+    //   parallel([
+    //     mutator('Projects', 'CREATE', defaultProjectData),
+    //     mutator('Projects', 'CREATE', defaultProjectData),
+    //   ])
     // ];
     const events = [
       pass(action('Users', 'CREATE', data), ['userId']),
-      parallel([
+      [
+        pass(mutator('Projects', 'CREATE', defaultProjectData), ['name']),
         mutator('Projects', 'CREATE', defaultProjectData),
-        mutator('Projects', 'CREATE', defaultProjectData),
-      ])
+      ],
+      mutator('Projects', 'CREATE', defaultProjectData),
     ];
     return { valid: true, events };
   }

@@ -6,5 +6,6 @@ export class Users extends BaseUsers {
     const { valid, events } = await super.CREATE(data);
     await processEvents(events);
     // TODO: Call API
+    return data;
   }
 }

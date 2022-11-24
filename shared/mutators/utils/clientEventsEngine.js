@@ -11,54 +11,57 @@ import { Projects } from '@mutators/projects/client.js';
 const isEvent = (entry) => isObject(entry) && entry.type === 'event';
 const isOperator = (entry) => isObject(entry) && entry.type === 'operator';
 
-// {
-//   model: 'Users',
-//   mutator: 'CREATE',
-//   action: 'CREATE',
-//   data: { ... }
-// }
-export async function processEvents(events, context = {}) {
-  console.log('EVENTS', events, context);
-  return process(events, context);
+export const DEFAULT_OPTIONS = { context: {}, globals: {} };
+
+function scopeOptions(options) {
+  const { globals } = options;
+  const scopedContext = cloneObject(options.context);
+  return { context: scopedContext, globals };
+}
+
+export async function processEvents(events, options) {
+  // console.log('EVENTS', events, options);
+  return process(events, options);
 }
 
 /* eslint-disable curly */
-async function process(entry, context) {
-  // console.log('entry + context', entry, context);
-  // if (Array.isArray(entry)) return forEachAsyncSeries(entry, (event) => process(event, context));
-  // if (isOperator(entry)) return processOperator(entry, context);
-  // if (isEvent(entry)) return processEvent(entry, context);
-  // logError('Error: Invalid entry found while processing events:', entry, context);
-  // return null;
-  console.log('entry + context', entry, '\n', context, Object.id(context));
-  console.log('old context', context, Object.id(context));
+async function process(entry, options) {
+  // console.log('entry + ...options', '\n', entry, '\n', context, '\n', globals);
   if (Array.isArray(entry)) {
-    const newContext = cloneObject(context);
-    return forEachAsyncSeries(entry, (event) => process(event, newContext));
+    const scopedOptions = scopeOptions(options);
+    return forEachAsyncSeries(entry, (event) => process(event, scopedOptions));
   }
-  if (isOperator(entry)) return processOperator(entry, context);
-  if (isEvent(entry)) return processEvent(entry, context);
-  logError('Error: Invalid entry found while processing events:', entry, context);
+  if (isOperator(entry)) return processOperator(entry, options);
+  if (isEvent(entry)) return processEvent(entry, options);
+  logError('Error: Invalid entry found while processing events:', entry, options);
   return null;
 }
 
-async function processOperator(entry, context) {
+async function processOperator(entry, options) {
+  const { context, globals } = options;
   if (entry.operatorType === 'parallel') {
-    const newContext = cloneObject(context);
-    return forEachAsyncParallel(entry.data, (event) => process(event, newContext));
+    const scopedOptions = scopeOptions(options);
+    return forEachAsyncParallel(entry.data, (event) => process(event, scopedOptions));
   }
   if (entry.operatorType === 'pass') {
-    const eventData = await processEvent(entry.event, context);
+    const eventData = await processEvent(entry.event, options);
     entry.data.forEach((passKey) => {
       context[passKey] = eventData[passKey];
     });
     return eventData;
   }
-  logError('Error: Invalid operator entry found while processing events:', entry, context);
+  if (entry.operatorType === 'globals') {
+    const eventData = await processEvent(entry.event, options);
+    entry.data.forEach((passKey) => {
+      globals[passKey] = eventData[passKey];
+    });
+    return eventData;
+  }
+  logError('Error: Invalid operator entry found while processing events:', entry, options);
   return null;
 }
 
-async function processEvent(event, context) {
+async function processEvent(event, options) {
   const MODEL_EXECUTOR_MAP = {
     Users: { mutator: Users, action: useUserStore },
     Projects: { mutator: Projects, action: useProjectStore },
@@ -67,7 +70,7 @@ async function processEvent(event, context) {
     model, mutator, action, data,
   } = event;
   const executor = MODEL_EXECUTOR_MAP[model];
-  if (mutator) return executor.mutator[mutator](data, context);
-  if (action) return executor.action()[action](data, context);
+  if (mutator) return executor.mutator[mutator](data, options);
+  if (action) return executor.action()[action](data, options);
   return null;
 }

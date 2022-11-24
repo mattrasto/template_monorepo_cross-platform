@@ -33,3 +33,7 @@ export function parallel(eventsArr) {
 export function pass(event, values) {
   return createOperator('pass', values, event);
 }
+
+export function globals(event, values) {
+  return createOperator('globals', values, event);
+}

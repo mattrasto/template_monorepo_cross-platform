@@ -40,16 +40,16 @@ export const objEquals = (a, b) => isEqual(a, b);
 // Modifies global Object prototype to allow for Object.id(obj) to return a unique ID
 // Useful for debugging object uniqueness, particularly in nested clojures
 // (eg. event processing context)
-let id = 0;
-Object.id = (o) => {
-  if (typeof o.__uniqueid !== 'undefined') return o.__uniqueid;
-  Object.defineProperty(o, '__uniqueid', {
-    // value: ++id,
-    value: Symbol(++id), // eslint-disable-line no-plusplus
-    enumerable: false,
-    // This could go either way, depending on your
-    // interpretation of what an "id" is
-    writable: false
-  });
-  return o.__uniqueid;
-};
+// let id = 0;
+// Object.id = (o) => {
+//   if (typeof o.__uniqueid !== 'undefined') return o.__uniqueid;
+//   Object.defineProperty(o, '__uniqueid', {
+//     // value: ++id,
+//     value: Symbol(++id), // eslint-disable-line no-plusplus
+//     enumerable: false,
+//     // This could go either way, depending on your
+//     // interpretation of what an "id" is
+//     writable: false
+//   });
+//   return o.__uniqueid;
+// };

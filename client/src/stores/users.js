@@ -9,7 +9,7 @@ export const useUserStore = defineStore('user', {
     // Internal (do not call directly)
     async CREATE(data, { context, globals }) {
       this.users.push(data);
-      console.log('CREATE USER', data, context, '\n', globals);
+      console.log('CREATE USER', data, '\n', context, '\n', globals);
       return data;
     },
     // Public

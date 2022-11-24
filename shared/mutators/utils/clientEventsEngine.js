@@ -1,5 +1,6 @@
 import { forEachAsyncSeries, forEachAsyncParallel } from '@utils/async.js';
 import { isObject, cloneObject } from '@utils/datatypes/object.js';
+import { isArray } from '@utils/datatypes/array.js';
 import { logError } from '@logging';
 
 import { useUserStore } from '@stores/users.js';
@@ -27,7 +28,7 @@ export async function processEvents(events, options) {
 /* eslint-disable curly */
 async function process(entry, options) {
   // console.log('entry + ...options', '\n', entry, '\n', context, '\n', globals);
-  if (Array.isArray(entry)) {
+  if (isArray(entry)) {
     const scopedOptions = scopeOptions(options);
     return forEachAsyncSeries(entry, (event) => process(event, scopedOptions));
   }
@@ -45,23 +46,42 @@ async function processOperator(entry, options) {
   }
   if (entry.operatorType === 'pass') {
     const eventData = await process(entry.entry, options);
-    entry.data.forEach((passKey) => {
-      context[passKey] = eventData[passKey];
-    });
+    if (isArray(entry.data)) {
+      entry.data.forEach((passKey) => {
+        context[passKey] = eventData[passKey];
+      });
+    } else if (isObject(entry.data)) {
+      Object.entries(entry.data).forEach(([passKey, mappedKey]) => {
+        context[mappedKey] = eventData[passKey];
+      });
+    }
     return eventData;
   }
   if (entry.operatorType === 'globals') {
     const eventData = await process(entry.entry, options);
-    entry.data.forEach((globalKey) => {
-      globals[globalKey] = eventData?.[globalKey];
-    });
+    if (isArray(entry.data)) {
+      entry.data.forEach((globalKey) => {
+        globals[globalKey] = eventData?.[globalKey];
+      });
+    } else if (isObject(entry.data)) {
+      Object.entries(entry.data).forEach(([globalKey, mappedKey]) => {
+        globals[mappedKey] = eventData?.[globalKey];
+      });
+    }
     return eventData;
   }
   if (entry.operatorType === 'inject') {
-    entry.data.forEach((injectKey) => {
-      // eslint-disable-next-line no-param-reassign
-      entry.event.data[injectKey] = context[injectKey] || globals[injectKey];
-    });
+    if (isArray(entry.data))
+      entry.data.forEach((injectKey) => {
+        // eslint-disable-next-line no-param-reassign
+        entry.event.data[injectKey] = context?.[injectKey] || globals?.[injectKey] || undefined;
+      });
+    else if (isObject(entry.data)) {
+      Object.entries(entry.data).forEach(([injectKey, mappedKey]) => {
+        // eslint-disable-next-line no-param-reassign
+        entry.event.data[mappedKey] = context?.[injectKey] || globals?.[injectKey] || undefined;
+      });
+    }
     await process(entry.entry, options);
     return null;
   }

@@ -1,3 +1,5 @@
+export const { isArray } = Array;
+
 // Creates a sequence from a specified range and step (interval)
 // Source (modified from): https://stackoverflow.com/a/44957114/3748574
 // Example: (0, 20, 5) -> [0, 5, 10, 15, 20]

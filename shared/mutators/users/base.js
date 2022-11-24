@@ -23,11 +23,11 @@ export class BaseUsers {
       name: 'Default Project',
     };
     const events = [
-      pass(action('Users', 'CREATE', data), ['userId']),
+      globals(action('Users', 'CREATE', data), { userId: 'userId1' }),
       [
-        inject(globals(pass(mutator('Projects', 'CREATE', defaultProjectDataA), ['name']), ['name']), ['userId']), // entry.event.event.data
+        inject(globals(pass(mutator('Projects', 'CREATE', defaultProjectDataA), ['name']), ['name']), ['userId1']),
         globals(inject(mutator('Projects', 'CREATE', defaultProjectDataB), ['userId']), ['projectId']),
-        inject(mutator('Projects', 'CREATE', defaultProjectDataC), ['userId']), // entry.event.data
+        inject(mutator('Projects', 'CREATE', defaultProjectDataC), { userId1: 'userId' }),
       ],
       mutator('Projects', 'CREATE', defaultProjectDataD),
     ];
@@ -82,6 +82,20 @@ export class BaseUsers {
 //     inject(globals(pass(mutator('Projects', 'CREATE', defaultProjectDataA), ['name']), ['name']), ['userId']), // entry.event.event.data
 //     globals(inject(mutator('Projects', 'CREATE', defaultProjectDataB), ['userId']), ['projectId']),
 //     inject(mutator('Projects', 'CREATE', defaultProjectDataC), ['userId']), // entry.event.data
+//   ],
+//   mutator('Projects', 'CREATE', defaultProjectDataD),
+// ];
+
+// Should behave similarly as above, except:
+// - First inner project should have "userId1" injected key
+// - Second inner project should not have any injected data
+// - Third inner project should have "userId" injected key
+// const events = [
+//   globals(action('Users', 'CREATE', data), { userId: 'userId1' }),
+//   [
+//     inject(globals(pass(mutator('Projects', 'CREATE', defaultProjectDataA), ['name']), ['name']), ['userId1']), // entry.event.event.data
+//     globals(inject(mutator('Projects', 'CREATE', defaultProjectDataB), ['userId']), ['projectId']),
+//     inject(mutator('Projects', 'CREATE', defaultProjectDataC), { userId1: 'userId' }), // entry.event.data
 //   ],
 //   mutator('Projects', 'CREATE', defaultProjectDataD),
 // ];

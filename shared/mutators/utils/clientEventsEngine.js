@@ -44,18 +44,26 @@ async function processOperator(entry, options) {
     return forEachAsyncParallel(entry.data, (event) => process(event, scopedOptions));
   }
   if (entry.operatorType === 'pass') {
-    const eventData = await processEvent(entry.event, options);
+    const eventData = await process(entry.entry, options);
     entry.data.forEach((passKey) => {
       context[passKey] = eventData[passKey];
     });
     return eventData;
   }
   if (entry.operatorType === 'globals') {
-    const eventData = await processEvent(entry.event, options);
-    entry.data.forEach((passKey) => {
-      globals[passKey] = eventData[passKey];
+    const eventData = await process(entry.entry, options);
+    entry.data.forEach((globalKey) => {
+      globals[globalKey] = eventData?.[globalKey];
     });
     return eventData;
+  }
+  if (entry.operatorType === 'inject') {
+    entry.data.forEach((injectKey) => {
+      // eslint-disable-next-line no-param-reassign
+      entry.event.data[injectKey] = context[injectKey] || globals[injectKey];
+    });
+    await process(entry.entry, options);
+    return null;
   }
   logError('Error: Invalid operator entry found while processing events:', entry, options);
   return null;

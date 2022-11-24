@@ -1,5 +1,5 @@
 import {
-  action, mutator, parallel, pass, globals,
+  action, mutator, parallel, pass, globals, inject,
 } from '@mutators/utils/events.js';
 
 export class BaseUsers {
@@ -22,19 +22,12 @@ export class BaseUsers {
       projectId: '4',
       name: 'Default Project',
     };
-    // const events = [
-    //   pass(action('Users', 'CREATE', data), ['userId']),
-    //   parallel([
-    //     mutator('Projects', 'CREATE', defaultProjectData),
-    //     mutator('Projects', 'CREATE', defaultProjectData),
-    //   ])
-    // ];
     const events = [
       pass(action('Users', 'CREATE', data), ['userId']),
       [
-        pass(mutator('Projects', 'CREATE', defaultProjectDataA), ['name']),
-        globals(mutator('Projects', 'CREATE', defaultProjectDataB), ['projectId']),
-        mutator('Projects', 'CREATE', defaultProjectDataC),
+        inject(globals(pass(mutator('Projects', 'CREATE', defaultProjectDataA), ['name']), ['name']), ['userId']), // entry.event.event.data
+        globals(inject(mutator('Projects', 'CREATE', defaultProjectDataB), ['userId']), ['projectId']),
+        inject(mutator('Projects', 'CREATE', defaultProjectDataC), ['userId']), // entry.event.data
       ],
       mutator('Projects', 'CREATE', defaultProjectDataD),
     ];
@@ -80,3 +73,15 @@ export class BaseUsers {
 //   ],
 //   mutator('Projects', 'CREATE', defaultProjectDataD),
 // ]);
+
+// Should behave exactly as the previous example, except inner projects should have "userId"
+// directly injected into their project data
+// const events = [
+//   pass(action('Users', 'CREATE', data), ['userId']),
+//   [
+//     inject(globals(pass(mutator('Projects', 'CREATE', defaultProjectDataA), ['name']), ['name']), ['userId']), // entry.event.event.data
+//     globals(inject(mutator('Projects', 'CREATE', defaultProjectDataB), ['userId']), ['projectId']),
+//     inject(mutator('Projects', 'CREATE', defaultProjectDataC), ['userId']), // entry.event.data
+//   ],
+//   mutator('Projects', 'CREATE', defaultProjectDataD),
+// ];

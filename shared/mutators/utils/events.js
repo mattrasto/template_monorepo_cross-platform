@@ -17,12 +17,13 @@ export function action(model, act, data) {
   return createEvent(model, undefined, act, data);
 }
 
-function createOperator(operatorType, data, event) {
+function createOperator(operatorType, data, entry) {
   return {
     type: 'operator',
     operatorType,
     data,
-    event,
+    entry,
+    event: entry?.event || entry, // Keep record of base event at top level of entry
   };
 }
 
@@ -30,10 +31,14 @@ export function parallel(eventsArr) {
   return createOperator('parallel', eventsArr);
 }
 
-export function pass(event, values) {
-  return createOperator('pass', values, event);
+export function pass(entry, values) {
+  return createOperator('pass', values, entry);
 }
 
-export function globals(event, values) {
-  return createOperator('globals', values, event);
+export function globals(entry, values) {
+  return createOperator('globals', values, entry);
+}
+
+export function inject(entry, values) {
+  return createOperator('inject', values, entry);
 }

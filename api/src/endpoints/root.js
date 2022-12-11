@@ -2,17 +2,19 @@ import express from 'express';
 
 import { prisma, isPrismaError } from '@database';
 
+import { processEvents } from '@mutators/events/apiEngine.js';
+
 const router = express.Router();
 
 router.get('/', async (req, res) => {
+  res.json({ status: 'success' });
+});
+
+router.post('/events', async (req, res) => {
   try {
-    const user = await prisma.users.create({
-      data: {
-        name: 'Alice',
-        email: 'alice@prisma.io',
-      },
-    });
-    console.log(user);
+    const { events } = req.body;
+    console.log('EVENTS', events);
+    await processEvents(events);
   } catch (e) {
     if (isPrismaError(e)) console.log(e);
   }

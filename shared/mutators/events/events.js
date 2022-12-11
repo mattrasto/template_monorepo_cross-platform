@@ -1,20 +1,20 @@
-function createEvent(model, mut, act, data) {
+import { MUTATORS } from '../index.js';
+
+function createEvent(model, act, data) {
   return {
     type: 'event',
-    eventType: (mut && 'mutation') || (act && 'action'),
     model,
-    mutator: mut,
     action: act,
     data
   };
 }
 
-export function mutator(model, mut, data) {
-  return createEvent(model, mut, undefined, data);
+export function action(model, act, data) {
+  return createEvent(model, act, data);
 }
 
-export function action(model, act, data) {
-  return createEvent(model, undefined, act, data);
+export function plan(model, act, data) {
+  return MUTATORS[model][act].PLAN(data);
 }
 
 function createOperator(operatorType, data, entry) {

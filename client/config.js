@@ -15,7 +15,7 @@ const env = {
       return `${this.clientProtocol}://${this.clientHost}:${this.clientPort}`;
     },
     // Which API host to use ("local", "staging", or "production")
-    apiMode: 'staging',
+    apiMode: 'local',
     get apiProtocol() {
       if (process.env.API_PROTOCOL) return process.env.API_PROTOCOL;
       if (this.apiMode === 'local') return 'http';
@@ -112,6 +112,7 @@ const env = {
 
 // Shared config
 export const CONFIG = deepMerge(env, {
+  service: 'CLIENT',
   environment: ENVIRONMENT,
   services: {}
 });

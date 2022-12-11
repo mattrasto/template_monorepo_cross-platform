@@ -1,41 +1,48 @@
-import {
-  action, mutator, parallel, pass, globals, inject,
-} from '@mutators/utils/events.js';
+import { action, plan } from '@mutators/events/events.js';
+import { attachMutatorExecutors } from '@mutators/utils/mutatorExecutors.js';
 
-export class BaseUsers {
-  static async CREATE(data) {
-    const { email } = data;
-    if (email.length < 3) return { valid: false, events: [] };
-    const defaultProjectDataA = {
-      projectId: '1',
-      name: 'Default Project',
-    };
-    const defaultProjectDataB = {
-      projectId: '2',
-      name: 'Default Project',
-    };
-    const defaultProjectDataC = {
-      projectId: '3',
-      name: 'Default Project',
-    };
-    const defaultProjectDataD = {
-      projectId: '4',
-      name: 'Default Project',
-    };
-    const events = [
-      globals(action('Users', 'CREATE', data), { userId: 'userId1' }),
-      [
-        inject(globals(pass(mutator('Projects', 'CREATE', defaultProjectDataA), ['name']), ['name']), ['userId1']),
-        globals(inject(mutator('Projects', 'CREATE', defaultProjectDataB), ['userId']), ['projectId']),
-        inject(mutator('Projects', 'CREATE', defaultProjectDataC), { userId1: 'userId' }),
-      ],
-      mutator('Projects', 'CREATE', defaultProjectDataD),
-    ];
-    return { valid: true, events };
+/* eslint-disable object-shorthand, func-names */
+
+export const Users = attachMutatorExecutors({
+  CREATE: {
+    PLAN: function (data) {
+      this.VALIDATE(data);
+      // TODO: Insert userId
+      const defaultProjectData = {
+        name: `${data.email}'s Project`,
+      };
+      return [
+        action('Users', 'CREATE', data),
+        plan('Projects', 'CREATE', defaultProjectData),
+      ];
+    },
+    VALIDATE: function (data) {
+      console.log('validating user', data);
+      const { email } = data;
+      if (email?.length < 3) throw new Error('Email is not long enough.');
+    },
   }
-}
+});
 
 // TESTS
+
+// Shared data
+// const defaultProjectDataA = {
+//   projectId: '1',
+//   name: 'Default Project',
+// };
+// const defaultProjectDataB = {
+//   projectId: '2',
+//   name: 'Default Project',
+// };
+// const defaultProjectDataC = {
+//   projectId: '3',
+//   name: 'Default Project',
+// };
+// const defaultProjectDataD = {
+//   projectId: '4',
+//   name: 'Default Project',
+// };
 
 // Projects should both be created with attached userId
 // Final project call should NOT have "projectName" in context

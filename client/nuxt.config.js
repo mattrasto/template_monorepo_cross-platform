@@ -23,4 +23,10 @@ export default defineNuxtConfig({
       'process.env': {}
     },
   },
+  vue: {
+    config: {
+      productionTip: false,
+      devtools: true
+    }
+  }
 });

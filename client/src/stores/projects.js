@@ -7,7 +7,7 @@ export const useProjectStore = defineStore('project', {
   actions: {
     async CREATE(data, { context, globals }) {
       this.projects.push(data);
-      console.log('CREATE PROJECT', data, context, '\n', globals);
+      console.log('CREATE PROJECT', data, '\n', context, '\n', globals);
       return data;
     },
   },

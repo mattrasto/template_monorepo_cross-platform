@@ -7,7 +7,7 @@ export async function initDatabase() {
 }
 
 export const PRISMA_ERRORS = [
-  Prisma.PrismaClientKnownErrorRequest,
+  Prisma.PrismaClientKnownRequestError,
 ];
 
 export function isPrismaError(e) {

@@ -26,7 +26,7 @@ export default {
   methods: {
     ...mapActions(useUserStore, ['CREATE_USER']),
     createValidUser() {
-      this.CREATE_USER({ email: 'mattrasto2@gmail.com', name: 'Matt' });
+      this.CREATE_USER({ email: 'mattrasto2@gmail.com', fullName: 'Matt' });
     },
     createInvalidUser() {
       this.CREATE_USER({ email: 'ma' });

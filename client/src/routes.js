@@ -2,6 +2,9 @@ const rootRoutes = [
   {
     name: 'store', path: '/store', file: '@pages/StoreTesterPage.vue', meta: { auth: true }
   },
+  {
+    name: 'auth', path: '/auth', file: '@pages/AuthTesterPage.vue', meta: { auth: true }
+  },
   { name: 'root', path: '/', file: '@pages/RootPage.vue' },
   // // Maintenance page
   // { path: '/maintenance', component: UnderConstructionPage },

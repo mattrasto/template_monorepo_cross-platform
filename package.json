@@ -69,7 +69,7 @@
     "pg": "^8.7.3",
     "pinia": "^2.0.24",
     "require-context": "^1.1.0",
-    "sequelize": "^6.19.0",
+    "sequelize": "^6.28.2",
     "sequelize-replace-enum-postgres": "^1.6.0",
     "stylelint": "^14.9.1",
     "url-loader": "^4.1.1",
